@@ -30,14 +30,14 @@ public class VendaService {
         venda.setVendedorId(dto.getVendedorId());
         venda.setVendedorNome(dto.getVendedorNome());
 
-        //salva venda no banco e retorna o objeto persistido
+        //salva a venda no banco e retorna o objeto persistido
         return vendaRepository.save(venda);
     }
 
     //listar relatorio de vendas por vendedor em um periodo especifico
     public List<VendedorRelatorioDTO> relatorio(LocalDate inicio, LocalDate fim) {
 
-        //busca todas as vendas
+        //busca todas as vendas do periodo informado
         List<Venda> vendas = vendaRepository.findByDataVendaBetween(inicio, fim);
 
         //calcula o numero de total de dias no periodo
@@ -49,16 +49,16 @@ public class VendaService {
 
         List<VendedorRelatorioDTO> resultado = new ArrayList<>();
 
-        //itera sobre cada vendedoir e calcula o total de vendas e sua media diaria
+        //para cada vendedor, calcula o total de vendas e sua media diaria
         for (Map.Entry<String, List<Venda>> entry : vendasPorVendedor.entrySet()) {
             String nome = entry.getKey();
             long totalVendas = entry.getValue().size();
 
-            //calculo de media diaria de vendas
+            //media diaria de vendas no periodo
             BigDecimal mediaVendasDiarias = BigDecimal.valueOf(totalVendas)
                     .divide(BigDecimal.valueOf(diasPeriodo), 2, RoundingMode.HALF_UP);
 
-            // cria a DTO e add na listya de resultados
+            // cria a DTO e add na lista de resultados
             resultado.add(new VendedorRelatorioDTO(nome, totalVendas, mediaVendasDiarias));
         }
         return resultado;

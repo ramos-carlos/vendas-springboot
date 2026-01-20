@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface VendaRepository extends JpaRepository<Venda, Long> {
 
+    //lista de vendas por periodo
     List<Venda> findByDataVendaBetween(LocalDate inicio, LocalDate fim);
 }
