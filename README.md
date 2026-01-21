@@ -1,4 +1,4 @@
-## API de Vendas - Teste Técnico X-Brain
+## API de Vendas - Teste Técnico
 
 ### Endpoints
 
